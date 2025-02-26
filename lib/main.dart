@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       builder: (context, child) => MaterialApp(
-        title: 'Stroe App',
+        title: 'My App',
         theme: ThemeData(
             useMaterial3: true,
             scaffoldBackgroundColor: AppColors.backgroundColor),

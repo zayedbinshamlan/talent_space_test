@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:talent_space_test/features/auth/Presentation/screens/sign_in_screen.dart';
+import 'package:talent_space_test/features/auth/Presentation/screens/sign_up_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -11,10 +12,11 @@ class AppRouter {
 
     final isIOS = defaultTargetPlatform == TargetPlatform.iOS;
     switch (settings.name) {
-
       case Routes.signInScreen:
         return _buildRoute(SignInScreen(), isIOS);
-   
+      case Routes.signUpScreen:
+        return _buildRoute(SignUpScreen(), isIOS);
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
