@@ -5,17 +5,20 @@ import 'package:talent_space_test/core/helpers/local_storage.dart';
 import 'package:talent_space_test/features/auth/Presentation/cubit/auth_state.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/send_verification_email_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_use_case.dart';
+import 'package:talent_space_test/features/auth/domin/usecases/sign_in_with_google_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_up_use_case.dart';
 import 'package:talent_space_test/main.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final SignInUseCase signInUseCase;
   final SignUpUseCase signUpUseCase;
+  final SignInWithGoogleUseCase signInWithGoogleUseCase;
   final SendVerificationEmailUseCase sendVerificationEmailUseCase;
 
   AuthCubit({
     required this.signInUseCase,
     required this.signUpUseCase,
+    required this.signInWithGoogleUseCase,
     required this.sendVerificationEmailUseCase,
   }) : super(AuthInitial());
 
@@ -38,6 +41,17 @@ class AuthCubit extends Cubit<AuthState> {
       await saveUserToken(user.uid);
       emit(AuthLoaded(user: user));
       await sendVerificationEmailUseCase.execute();
+    } catch (e) {
+      emit(AuthError(message: e.toString()));
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      emit(AuthLoading());
+      final user = await signInWithGoogleUseCase.execute();
+      await saveUserToken(user.uid);
+      emit(AuthLoaded(user: user));
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }

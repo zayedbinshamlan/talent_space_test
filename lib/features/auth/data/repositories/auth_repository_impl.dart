@@ -9,8 +9,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._firebaseAuthDataSource);
 
   @override
-  Future signUp(
-      String name, String email, String password) async {
+  Future signUp(String name, String email, String password) async {
     try {
       final UserCredential userCredential = await _firebaseAuthDataSource
           .signUpWithEmailPassword(name, email, password);
@@ -40,5 +39,18 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signOut() async {
     await _firebaseAuthDataSource.signOut();
+  }
+
+  @override
+  Future signInWithGoogle() async {
+    try {
+      final UserCredential userCredential =
+          await _firebaseAuthDataSource.signInWithGoogle();
+      final User? firebaseUser = userCredential.user;
+      if (firebaseUser == null) throw Exception("Google sign-in failed");
+      return firebaseUser;
+    } catch (e) {
+      throw Exception("Error signing in with Google: $e");
+    }
   }
 }

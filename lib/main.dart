@@ -14,6 +14,7 @@ import 'package:talent_space_test/features/auth/data/datasource/firebase_auth_da
 import 'package:talent_space_test/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/send_verification_email_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_use_case.dart';
+import 'package:talent_space_test/features/auth/domin/usecases/sign_in_with_google_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_up_use_case.dart';
 import 'package:talent_space_test/firebase_options.dart';
 
@@ -48,11 +49,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => AuthCubit(
               signInUseCase: SignInUseCase(
-                authRepository: AuthRepositoryImpl(FirebaseAuthDataSource()),
-              ),
+                  authRepository: AuthRepositoryImpl(FirebaseAuthDataSource())),
               signUpUseCase: SignUpUseCase(
-                authRepository: AuthRepositoryImpl(FirebaseAuthDataSource()),
-              ),
+                  authRepository: AuthRepositoryImpl(FirebaseAuthDataSource())),
+              signInWithGoogleUseCase: SignInWithGoogleUseCase(
+                  authRepository: AuthRepositoryImpl(FirebaseAuthDataSource())),
               sendVerificationEmailUseCase: SendVerificationEmailUseCase(
                   authRepository:
                       AuthRepositoryImpl(FirebaseAuthDataSource()))),
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               scaffoldBackgroundColor: AppColors.backgroundColor),
           debugShowCheckedModeBanner: false,
-          initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.signInScreen,
+          initialRoute:
+              isLoggedInUser ? Routes.homeScreen : Routes.signInScreen,
           onGenerateRoute: appRouter.generateRoute,
         ),
       ),

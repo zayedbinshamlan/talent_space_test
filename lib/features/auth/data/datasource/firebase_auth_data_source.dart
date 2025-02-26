@@ -2,10 +2,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<UserCredential> signUpWithEmailPassword(
       String name, String email, String password) async {
@@ -20,6 +22,24 @@ class FirebaseAuthDataSource {
       String email, String password) async {
     return await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      throw Exception("Google sign-in was cancelled.");
+    }
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    UserCredential userCredential =
+        await _firebaseAuth.signInWithCredential(credential);
+
+    await addUserDataToFirestore(
+        userCredential.user!.displayName.toString(), userCredential.user, '');
+
+    return userCredential;
   }
 
   Future<void> addUserDataToFirestore(

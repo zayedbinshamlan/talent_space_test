@@ -7,25 +7,28 @@ class SocialLoginButton extends StatelessWidget {
   final Color buttonColor;
   final double? padding;
   final double? iconWidth;
-
+  final Function()? onTap;
   const SocialLoginButton(this.buttonText, this.buttonColor, this.padding,
-      {super.key, this.iconWidth});
+      {super.key, this.iconWidth, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 50.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6.r),
-        color: buttonColor,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: padding!),
-        child: Align(
-          child: Text(
-            buttonText,
-            style: TextStyles.font14WhiteMedium.copyWith(fontSize: 16.sp),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 50.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.r),
+          color: buttonColor,
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding!),
+          child: Align(
+            child: Text(
+              buttonText,
+              style: TextStyles.font14WhiteMedium.copyWith(fontSize: 16.sp),
+            ),
           ),
         ),
       ),
