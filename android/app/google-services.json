@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "714500472915",
+    "project_id": "talent-space-bfca5",
+    "storage_bucket": "talent-space-bfca5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714500472915:android:15d53eb698f6a2acf186a6",
+        "android_client_info": {
+          "package_name": "com.example.talent_space_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714500472915-605a1pq9r56pi0vjaii603b4u92pc7h8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArakAjlINhhztLAEGWfpkJXjFm7AOleZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714500472915-605a1pq9r56pi0vjaii603b4u92pc7h8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
