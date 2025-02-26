@@ -21,9 +21,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signInWithEmailPassword(String email, String password) async {
     try {
-      emit(AuthInitial());
-
+      emit(AuthLoading());
       User user = await signInUseCase.execute(email, password);
+      await saveUserToken(user.uid);
       emit(AuthLoaded(user: user));
     } catch (e) {
       emit(AuthError(message: e.toString()));

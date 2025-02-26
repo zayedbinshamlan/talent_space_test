@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talent_space_test/core/helpers/spacing.dart';
 import 'package:talent_space_test/core/theming/text_styles.dart';
+import 'package:talent_space_test/features/auth/Presentation/cubit/auth_cubit.dart';
 import 'package:talent_space_test/features/auth/Presentation/widgets/create_account_button.dart';
 import 'package:talent_space_test/features/auth/Presentation/widgets/email_input.dart';
 import 'package:talent_space_test/features/auth/Presentation/widgets/password_input.dart';
+import 'package:talent_space_test/features/auth/Presentation/widgets/sign_in_bloc_listener.dart';
 import 'package:talent_space_test/features/auth/Presentation/widgets/sign_in_button.dart';
 import 'package:talent_space_test/features/auth/Presentation/widgets/social_login_section.dart';
 
@@ -50,13 +53,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     final email = emailController.text;
                     final password = passwordController.text;
                     if (formKey.currentState!.validate()) {
-                      print(email);
-                      print(password);
+                      context
+                          .read<AuthCubit>()
+                          .signInWithEmailPassword(email, password);
                     }
                   },
                 ),
                 SocialLoginSection(),
                 CreateAccountButton(),
+                SignInBlocListener()
               ],
             ),
           ),
