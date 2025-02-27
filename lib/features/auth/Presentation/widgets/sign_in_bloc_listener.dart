@@ -23,7 +23,7 @@ class SignInBlocListener extends StatelessWidget {
                       color: AppColors.praimryOrangeColor, size: 30.0)),
             );
           } else if (state is AuthLoaded) {
-            context.pushNamedAndRemoveUntil(Routes.homeScreen,
+            context.pushNamedAndRemoveUntil(Routes.navBar,
                 predicate: (route) => false);
           } else if (state is AuthError) {
             setupErrorState(context,

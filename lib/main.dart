@@ -68,8 +68,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               scaffoldBackgroundColor: AppColors.backgroundColor),
           debugShowCheckedModeBanner: false,
-          initialRoute:
-              isLoggedInUser ? Routes.homeScreen : Routes.signInScreen,
+          initialRoute: isLoggedInUser ? Routes.navBar : Routes.signInScreen,
           onGenerateRoute: appRouter.generateRoute,
         ),
       ),
