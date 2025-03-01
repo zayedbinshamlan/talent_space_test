@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:talent_space_test/core/theming/app_colors.dart';
-import 'package:talent_space_test/features/home/home_screen.dart';
+import 'package:talent_space_test/features/home/presentation/screens/home_screen.dart';
 
 class NavigationBarView extends StatefulWidget {
   const NavigationBarView({super.key, this.targetIndex = 0});

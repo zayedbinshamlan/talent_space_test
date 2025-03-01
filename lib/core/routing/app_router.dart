@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:talent_space_test/core/widgets/navigation_bar_view.dart';
 import 'package:talent_space_test/features/auth/Presentation/screens/sign_in_screen.dart';
 import 'package:talent_space_test/features/auth/Presentation/screens/sign_up_screen.dart';
-import 'package:talent_space_test/features/home/home_screen.dart';
+import 'package:talent_space_test/features/home/presentation/screens/home_screen.dart';
 import 'routes.dart';
 
 class AppRouter {

@@ -16,6 +16,13 @@ import 'package:talent_space_test/features/auth/domin/usecases/send_verification
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_with_google_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_up_use_case.dart';
+import 'package:talent_space_test/features/home/data/datasource/notification_data_source.dart';
+import 'package:talent_space_test/features/home/data/datasource/video_data_source.dart';
+import 'package:talent_space_test/features/home/data/repositories/notification_repository_impl.dart';
+import 'package:talent_space_test/features/home/data/repositories/video_repository_impl.dart';
+import 'package:talent_space_test/features/home/domin/usecases/send_notification_use_case.dart';
+import 'package:talent_space_test/features/home/domin/usecases/get_video_use_case.dart';
+import 'package:talent_space_test/features/home/presentation/cubit/video_cubit.dart';
 import 'package:talent_space_test/firebase_options.dart';
 
 String? userToken;
@@ -58,6 +65,15 @@ class MyApp extends StatelessWidget {
                   authRepository:
                       AuthRepositoryImpl(FirebaseAuthDataSource()))),
         ),
+        BlocProvider(
+            create: (_) => VideoCubit(
+                getVideosUseCase: GetVideoUseCase(
+                    videoRepository: VideoRepositoryImpl(
+                        videoDataSource: VideoDataSource())),
+                sendNotificationUseCase: SendNotificationUseCase(
+                    notificationRrepository: NotificationRepositoryImpl(
+                        notificationDataSource: NotificationDataSource())))
+              ..getVideos())
       ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852),

@@ -1,6 +1,7 @@
 // firebase_auth_datasource.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -46,12 +47,13 @@ class FirebaseAuthDataSource {
       String name, User? user, String password) async {
     if (user != null) {
       try {
+        String? fcmToken = await FirebaseMessaging.instance.getToken();
         await _firestore.collection('users').doc(user.uid).set({
           'uid': user.uid,
           'name': name,
           'email': user.email,
-          'password': password,
           'createdAt': Timestamp.now(),
+          'fcmToken': fcmToken,
         });
       } catch (e) {
         debugPrint('Error adding user data to Firestore: $e');
