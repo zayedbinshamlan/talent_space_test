@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -30,6 +29,8 @@ class SignUpBlocListener extends StatelessWidget {
                   content: Text("تم إرسال رابط التحقق إلى بريدك الإلكتروني")),
             );
           } else if (state is AuthError) {
+            context.pop();
+
             setupErrorState(context, 'تأكد من ملْ كل الحقول');
           }
         },

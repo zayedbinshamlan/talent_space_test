@@ -53,4 +53,13 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception("Error signing in with Google: $e");
     }
   }
+
+  @override
+  Future updateUserProfile(String name ,String uId) async {
+    try {
+      await _firebaseAuthDataSource.updateUserProfile(name ,uId);
+    } catch (e) {
+      throw Exception("Error update user profile: $e");
+    }
+  }
 }

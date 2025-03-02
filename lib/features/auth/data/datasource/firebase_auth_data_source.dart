@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:talent_space_test/core/helpers/local_storage.dart';
 
 class FirebaseAuthDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -16,6 +17,7 @@ class FirebaseAuthDataSource {
         .createUserWithEmailAndPassword(email: email, password: password);
 
     await addUserDataToFirestore(name, userCredential.user, password);
+    await storeUserLocally(userCredential.user!, name);
     return userCredential;
   }
 
@@ -39,7 +41,7 @@ class FirebaseAuthDataSource {
 
     await addUserDataToFirestore(
         userCredential.user!.displayName.toString(), userCredential.user, '');
-
+    await storeUserLocally(userCredential.user!, '');
     return userCredential;
   }
 
@@ -68,7 +70,34 @@ class FirebaseAuthDataSource {
     }
   }
 
+  Future<void> storeUserLocally(User user, String name) async {
+    await SharedPrefHelper.setData('uid', user.uid);
+    await SharedPrefHelper.setData('name', user.displayName ?? name);
+    await SharedPrefHelper.setData('email', user.email ?? '');
+    await SharedPrefHelper.setData(
+        'fcmToken', await FirebaseMessaging.instance.getToken() ?? '');
+  }
+
+  Future<Map<String, String>> getUserDataFromLocal() async {
+    return {
+      'uid': await SharedPrefHelper.getString('uid') ?? '',
+      'name': await SharedPrefHelper.getString('name') ?? '',
+      'email': await SharedPrefHelper.getString('email') ?? '',
+      'fcmToken': await SharedPrefHelper.getString('fcmToken') ?? '',
+    };
+  }
+
+  Future<void> updateUserProfile(String name, String uId) async {
+    try {
+      await _firestore.collection('users').doc(uId).update({'name': name});
+      await SharedPrefHelper.setData('name', name);
+    } catch (e) {
+      throw Exception("Error updating user profile: $e");
+    }
+  }
+
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+    await SharedPrefHelper.clearAllData();
   }
 }

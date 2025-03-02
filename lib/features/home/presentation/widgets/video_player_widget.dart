@@ -1,4 +1,3 @@
-
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
@@ -62,6 +61,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
@@ -73,8 +74,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     : _controller.play();
               });
             },
-            child: VideoPlayer(_controller),
-          )
+            child: VideoPlayer(_controller))
         : Center(child: CircularProgressIndicator());
   }
 }

@@ -7,6 +7,7 @@ import 'package:talent_space_test/features/auth/domin/usecases/send_verification
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_in_with_google_use_case.dart';
 import 'package:talent_space_test/features/auth/domin/usecases/sign_up_use_case.dart';
+import 'package:talent_space_test/features/auth/domin/usecases/update_user_profile_use_case.dart';
 import 'package:talent_space_test/main.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -14,12 +15,14 @@ class AuthCubit extends Cubit<AuthState> {
   final SignUpUseCase signUpUseCase;
   final SignInWithGoogleUseCase signInWithGoogleUseCase;
   final SendVerificationEmailUseCase sendVerificationEmailUseCase;
+  final UpdateUserProfileUseCase updateUserProfileUseCase;
 
   AuthCubit({
     required this.signInUseCase,
     required this.signUpUseCase,
     required this.signInWithGoogleUseCase,
     required this.sendVerificationEmailUseCase,
+    required this.updateUserProfileUseCase,
   }) : super(AuthInitial());
 
   Future<void> signInWithEmailPassword(String email, String password) async {
@@ -40,7 +43,6 @@ class AuthCubit extends Cubit<AuthState> {
       User user = await signUpUseCase.execute(name, email, password);
       await saveUserToken(user.uid);
       emit(AuthLoaded(user: user));
-      await sendVerificationEmailUseCase.execute();
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }
@@ -52,6 +54,16 @@ class AuthCubit extends Cubit<AuthState> {
       final user = await signInWithGoogleUseCase.execute();
       await saveUserToken(user.uid);
       emit(AuthLoaded(user: user));
+    } catch (e) {
+      emit(AuthError(message: e.toString()));
+    }
+  }
+
+  Future<void> updateUserProfile(String name ,String uId) async {
+    try {
+      emit(AuthLoading());
+      await updateUserProfileUseCase.execute(name , uId);
+      emit(AuthLoaded(user: FirebaseAuth.instance.currentUser!));
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }

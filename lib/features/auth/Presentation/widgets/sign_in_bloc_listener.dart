@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -26,6 +25,7 @@ class SignInBlocListener extends StatelessWidget {
             context.pushNamedAndRemoveUntil(Routes.navBar,
                 predicate: (route) => false);
           } else if (state is AuthError) {
+            context.pop();
             setupErrorState(context,
                 'تأكد من كتابة البريد الإلكتروني وكلمة المرور بشكل صحيح');
           }
